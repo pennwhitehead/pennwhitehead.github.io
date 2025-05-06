@@ -11,7 +11,7 @@
       const code = params.get("code");
 
       if (code) {
-        fetch("http://localhost:3000/auth-complete?code=" + encodeURIComponent(code))
+        fetch("http://127.0.0.1:3000/auth-complete?code=" + encodeURIComponent(code))
           .then(() => {
             document.body.innerHTML = "<p>✅ All set! You can now close this window.</p>";
           })
