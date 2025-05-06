@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="UTF-8" />
+    <title>Redirecting…</title>
+  </head>
+  <body>
+    <h2>Redirecting...</h2>
+    <script>
+      const params = new URLSearchParams(window.location.search);
+      const code = params.get("code");
+      if (code) {
+        // Send code back to your local Electron app
+        fetch("http://localhost:3000/auth-complete?code=" + encodeURIComponent(code))
+          .then(() => {
+            document.body.innerHTML = "<p>You can now close this window.</p>";
+          });
+      } else {
+        document.body.innerHTML = "<p>No code found.</p>";
+      }
+    </script>
+  </body>
+</html>
