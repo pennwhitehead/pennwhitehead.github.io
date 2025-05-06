@@ -9,14 +9,18 @@
     <script>
       const params = new URLSearchParams(window.location.search);
       const code = params.get("code");
+
       if (code) {
-        // Send code back to your local Electron app
         fetch("http://localhost:3000/auth-complete?code=" + encodeURIComponent(code))
           .then(() => {
-            document.body.innerHTML = "<p>You can now close this window.</p>";
+            document.body.innerHTML = "<p>✅ All set! You can now close this window.</p>";
+          })
+          .catch((err) => {
+            document.body.innerHTML = "<p>⚠️ Couldn't connect to your app. Is it running?</p>";
+            console.error(err);
           });
       } else {
-        document.body.innerHTML = "<p>No code found.</p>";
+        document.body.innerHTML = "<p>⚠️ No code found in URL.</p>";
       }
     </script>
   </body>
