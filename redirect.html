@@ -6,21 +6,31 @@
   </head>
   <body>
     <h2>Redirecting...</h2>
+    <pre id="log"></pre>
     <script>
+      const log = (msg) => {
+        console.log(msg);
+        document.getElementById('log').textContent += msg + '\n';
+      };
+
       const params = new URLSearchParams(window.location.search);
       const code = params.get("code");
 
       if (code) {
+        log("🎉 Found code: " + code);
         fetch("http://127.0.0.1:3000/auth-complete?code=" + encodeURIComponent(code))
-          .then(() => {
-            document.body.innerHTML = "<p>✅ All set! You can now close this window.</p>";
+          .then(res => {
+            log("✅ Successfully sent code to app.");
+            document.body.innerHTML = "<h2>All set! You can now close this window.</h2>";
           })
-          .catch((err) => {
-            document.body.innerHTML = "<p>⚠️ Couldn't connect to your app. Is it running?</p>";
+          .catch(err => {
+            log("❌ Failed to connect to local app.");
+            document.body.innerHTML = "<h2>Could not reach your app. Is it running?</h2>";
             console.error(err);
           });
       } else {
-        document.body.innerHTML = "<p>⚠️ No code found in URL.</p>";
+        log("⚠️ No code found in URL.");
+        document.body.innerHTML = "<h2>No authorization code in redirect.</h2>";
       }
     </script>
   </body>
